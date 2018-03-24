@@ -1,0 +1,10 @@
+﻿@model WebApplication1.Models.Appraisal
+
+@if (Model != null)
+{
+    <h5 class="has-success divider">Created Appraisal</h5>
+    <hr/>
+    <label class=""></label>
+    @Html.LabelFor(m => m.Appraisee, new {@class = "label-primary col-sm-3" }) 
+    @Html.DisplayFor(m => m.Appraisee, new {@class = "text-primary col-sm-5" })
+}

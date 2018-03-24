@@ -1,0 +1,18 @@
+﻿@model IEnumerable<WebApplication1.Models.Appraisal>
+
+<h2>@ViewBag.Title</h2>
+<div>
+    @Html.ActionLink("New Form", "Create")
+    <hr />
+    <h3>Appraisee List</h3>
+    @foreach (var item in Model)
+    {
+        <div>
+            @Html.DisplayFor(m => item.Appraisee)
+            @Html.ActionLink("Edit", "Edit", "Appraisal", new { id = item.EmployeeId }, null)||
+            @Html.ActionLink("View", "View", "Appraisal", new { id = item.EmployeeId }, null)
+            <label  text="Label" name="errorMessage" ID="lbl" />
+        </div>
+    }
+</div>
+

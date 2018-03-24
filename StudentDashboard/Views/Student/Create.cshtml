@@ -1,0 +1,59 @@
+﻿@model StudentDashboard.Models.StudentModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSubmitStudent").click(function (e) {
+                var fn = $("#FirstName").val();
+                if (fn == "") {
+                    //show error message
+                    e.preventDefault();
+                    return;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        @using (@Html.BeginForm("Create", "Student"))
+        {
+            @ViewBag.County
+            
+        @Html.TextBoxFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(m => m.LastName)
+        <span>Male:</span> @Html.RadioButton("Gender", "Male")
+        <span>Female:</span> @Html.RadioButton("Gender", "Female")
+            <input type="email"/>
+            <input type="password"/>
+        <select  id="City" name="City">
+        <option>Select City</option>
+        <option>Kent</option>
+        <option>Canton</option>
+         <option>Stow</option>
+        </select>
+
+        <select id="Country" name="Country">
+            <option>Select Country</option>
+            <option>USA</option>
+            <option>India</option>
+            <option>Japan</option>
+        </select>
+        
+        <input type="submit" value="Create Student" id="btnSubmitStudent"/>
+        }
+    </div>
+
+</body>
+</html>

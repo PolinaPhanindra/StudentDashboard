@@ -1,0 +1,153 @@
+﻿@model WebApplication1.Models.Appraisal
+
+@{
+    ViewBag.Title = "Create";
+}
+Response code : @Response.StatusCode
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Appraisal</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmployeeId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Appraiser, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Appraiser, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Appraiser, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Appraisee, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Appraisee, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Appraisee, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicable, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Applicable)
+                    @Html.ValidationMessageFor(model => model.Applicable, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Create Async" class="btn btn-default" id="CreateAsync" />
+    </div>
+</div>
+@using (Ajax.BeginForm("Create", "Appraisal", new AjaxOptions { OnSuccess = "OnAjaxSuccess" }))
+{
+   
+    <div class="form-horizontal">
+        <h4>Appraisal</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmployeeId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Appraiser, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Appraiser, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Appraiser, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Appraisee, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Appraisee, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Appraisee, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicable, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Applicable)
+                    @Html.ValidationMessageFor(model => model.Applicable, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div id="address_data">
+            @Html.Partial("Adresstemplete");
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>
+<div id="createdAppraisal"></div>
+
+@section scripts{ 
+    
+<script type="text/javascript" >
+    $(document).ready(function () {
+        function OnAjaxSuccess(data) {
+            $("#createdAppraisal").html(data).toggle(13000);
+            
+            //alert(data);
+            //if (data) window.location.href = '@Url.Action("Index","Appraisal")';
+        }
+
+        $("#CreateAsync").click(function (e) {
+            var model = {EmployeeId:$("#EmployeeId").val(),
+                Appraiser:$("#Appraiser").val(),
+                Appraisee:$("#Appraisee").val(),
+                Applicable:$("#Applicable").val()
+            }
+
+            $.ajax({
+                url: '@Url.Action("CreateAsync1","Appraisal")',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(model),
+                success: OnAjaxSuccess
+            });
+        });
+        // do it ischecked ? t: f
+        // func ... get request url:app, success:, error:alert('')
+    });
+</script>
+
+}

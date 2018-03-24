@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+        <a href="/Student/Create">Get Student Form</a>
+
+        <table>
+            @foreach (StudentDashboard.Models.StudentModel item in ViewBag.Students)
+            {
+                <tr>
+                    
+                    @Html.ActionLink(@item.ID.ToString(), "Edit","Student", new { id = @item.ID})
+                </tr>
+                <tr>
+                  @Html.Display(@item.FirstName)
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
